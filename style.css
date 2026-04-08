@@ -385,3 +385,28 @@ body.theme-accessibility .action-btn {
         text-align: center;
     }
 }
+
+/* для страницы рейтинга */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    overflow: hidden;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+th {
+    background: var(--accent);
+    color: white;
+}
+.vote-btn {
+    background: var(--accent);
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}

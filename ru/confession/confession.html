@@ -23,12 +23,12 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-menu" id="navMenu">
-                <a href="index.html" class="active">🏠 Главная</a>
-                <a href="top.html">💩 Топ фактов</a>
-                <a href="rating.html">🏆 Рейтинг</a>
-                <a href="confession.html">🗣 Исповедь</a>
-                <a href="contact.html">📞 Контакты</a>
-            </nav>
+				<a href="/ru/">🏠 Home</a>
+				<a href="/ru/top/">💩 Top Facts</a>
+				<a href="/ru/rating/">🏆 Rating</a>
+				<a href="/ru/confession/">🗣 Confession</a>
+				<a href="/ru/contact/">📞 Contact</a>
+			</nav>
             <div class="toolbar">
                 <div class="theme-switcher">
                     <button data-theme="light">🌞</button>
@@ -60,11 +60,14 @@
         </div>
 
         <div class="container">
-			<h2>📞 Контакты сатанистов и прочей швали</h2>
-			<p>Телефон доверия: 8-800-555-35-35 (шутка, не звоните)</p>
-			<p>Email: nenormikchel@gmail.com</p>
-			<p>Адрес: Кладбище домашних животных, сектор G, могила №666</p>
-			<p>Мы не несём ответственности за ваши действия. Помните: жизнь ценна, а энциклопедия — просто трэш.</p>
+			<h2>🗣 Исповедь трэша</h2>
+			<p>Анонимно признайся в своей самой дикой фетиш-истории или глупости.</p>
+			<form id="confessionForm">
+				<textarea id="confessionText" rows="4" placeholder="Напиши здесь... (максимум 200 символов)" style="width:100%; background:rgba(0,0,0,0.5); color:white; border-radius:20px; padding:15px;"></textarea>
+				<button type="submit" class="action-btn" style="margin-top:10px;">Опубликовать исповедь</button>
+			</form>
+			<h3>Прошлые исповеди:</h3>
+			<div id="confessionsList"></div>
 		</div>
 
         <footer class="glass-footer">
