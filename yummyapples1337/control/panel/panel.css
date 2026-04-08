@@ -77,3 +77,11 @@
     padding: 6px 12px;
     font-size: 0.85rem;
 }
+
+.lang-btn img {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: none;  /* отключает клик по флагу как по отдельному элементу */
+    display: inline-block;
+}
