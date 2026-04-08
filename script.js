@@ -206,3 +206,124 @@ document.addEventListener("DOMContentLoaded", () => {
         if(bg) bg.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
     });
 });
+
+// ========== ДОПОЛНИТЕЛЬНЫЙ КОД ДЛЯ МНОГОСТРАНИЧНОСТИ ==========
+// Определяем текущую страницу
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+// Данные для страницы top.html
+const topFacts = {
+    ru: [
+        "Некрофилы были замечены на кладбище с вибратором в форме кости.",
+        "Педофилы в тюрьме становятся 'девочками' для других заключённых.",
+        "Зоофилы пробовали скрестить овцу с табуреткой.",
+        "АУЕшники красят ногти в черный и называют это 'понятия'.",
+        "Говноеды утверждают, что какашки веганов слаще."
+    ],
+    en: [
+        "Necrophiles were caught at cemetery with bone-shaped vibrator.",
+        "Pedophiles in prison become 'girls' for other inmates.",
+        "Zoophiles tried to cross a sheep with a stool.",
+        "AUE thugs paint nails black and call it 'code'.",
+        "Shit-eaters claim vegan poop is sweeter."
+    ]
+};
+
+// Рейтинг (голосование)
+let ratingStorage = JSON.parse(localStorage.getItem("trashRating")) || {};
+function initRating() {
+    for (let i = 0; i < 29; i++) {
+        if (ratingStorage[i] === undefined) ratingStorage[i] = 0;
+    }
+    localStorage.setItem("trashRating", JSON.stringify(ratingStorage));
+}
+
+// Исповеди
+let confessions = JSON.parse(localStorage.getItem("trashConfessions")) || [];
+
+// Функция переключения языка с сохранением страницы
+function switchLanguage(lang) {
+    localStorage.setItem('trashLang', lang);
+    window.location.href = '/' + lang + '/' + currentPage;
+}
+
+// Обработка разных страниц
+if (currentPage === 'top.html') {
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("topFactsList");
+        if (container) {
+            const facts = topFacts[currentLang];
+            container.innerHTML = facts.map((f, i) => `<div class="glass-card" style="margin-bottom:20px;"><h3>💩 Факт ${i+1}</h3><p>${f}</p></div>`).join('');
+        }
+    });
+} else if (currentPage === 'rating.html') {
+    document.addEventListener("DOMContentLoaded", () => {
+        initRating();
+        const container = document.getElementById("ratingTable");
+        if (!container) return;
+        function renderRating() {
+            const categories = categoriesData[currentLang];
+            const sorted = [...categories].sort((a,b) => (ratingStorage[b.id]||0) - (ratingStorage[a.id]||0));
+            container.innerHTML = `<table style="width:100%; border-collapse: collapse;">
+                <tr><th>Место</th><th>Категория</th><th>Голосов</th><th>Действие</th></tr>
+                ${sorted.map((cat, idx) => `
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td>${idx+1}</td>
+                        <td>${cat.icon} ${cat.name}</td>
+                        <td>${ratingStorage[cat.id]||0}</td>
+                        <td><button class="vote-btn" data-id="${cat.id}">+1</button></td>
+                    </tr>
+                `).join('')}
+             </table>`;
+            document.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.dataset.id);
+                    ratingStorage[id] = (ratingStorage[id]||0) + 1;
+                    localStorage.setItem("trashRating", JSON.stringify(ratingStorage));
+                    renderRating();
+                });
+            });
+        }
+        renderRating();
+    });
+} else if (currentPage === 'confession.html') {
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("confessionForm");
+        const list = document.getElementById("confessionsList");
+        function renderConfessions() {
+            if (!list) return;
+            list.innerHTML = confessions.map(c => `<div class="glass-card" style="margin-bottom:15px;"><p>${c.text}</p><small>${c.date}</small></div>`).join('');
+        }
+        if (form) {
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const text = document.getElementById("confessionText").value;
+                if (text.trim()) {
+                    confessions.unshift({ text: text.slice(0,200), date: new Date().toLocaleString() });
+                    localStorage.setItem("trashConfessions", JSON.stringify(confessions));
+                    renderConfessions();
+                    form.reset();
+                }
+            });
+        }
+        renderConfessions();
+    });
+}
+
+// Бургер-меню (добавить в DOMContentLoaded)
+document.addEventListener("DOMContentLoaded", () => {
+    const burger = document.getElementById("burgerMenu");
+    const navMenu = document.getElementById("navMenu");
+    if (burger && navMenu) {
+        burger.addEventListener("click", () => navMenu.classList.toggle("open"));
+        navMenu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => navMenu.classList.remove("open")));
+    }
+    // Подсветка активной страницы в меню
+    const currentPath = window.location.pathname;
+    document.querySelectorAll(".nav-menu a").forEach(link => {
+        const href = link.getAttribute("href");
+        if (currentPath.endsWith(href) || (currentPath.endsWith('/') && href === 'index.html')) {
+            link.classList.add("active");
+        }
+    });
+});
