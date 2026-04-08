@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗑️ Trash Encyclopedia — музей биомусора [RU]</title>
+    <meta name="description" content="Эпатажная энциклопедия отбросов общества. Чёрный юмор, самовыпил и прочая хуйня.">
+    <link rel="alternate" hreflang="en" href="/en/">
+    <link rel="alternate" hreflang="ru" href="/ru/">
+    <link rel="canonical" href="https://trash-encyclopedia.github.io/ru/">
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+    <div class="glow-bg"></div>
+    <div class="container">
+        <header class="glass-header">
+            <div class="logo">
+                <span class="trash-icon">💀🗑️</span>
+                <h1>TRASH ENCYCLOPEDIA</h1>
+                <div class="sub">биомусор • самовыпил • эпатаж</div>
+            </div>
+            <div class="toolbar">
+                <div class="theme-switcher">
+                    <button data-theme="light" title="Светлая">🌞</button>
+                    <button data-theme="dark" title="Тёмная">🌙</button>
+                    <button data-theme="contrast" title="Контрастная">⚡</button>
+                    <button data-theme="accessibility" title="Для слабовидящих">👁️</button>
+                </div>
+                <div class="lang-switcher">
+                    <button id="lang-ru" class="lang-btn active">RU</button>
+                    <button id="lang-en" class="lang-btn">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="search-sort">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по дерьму...">
+                <div class="sort-buttons">
+                    <button id="sortAZ" class="action-btn">📄 A→Z</button>
+                    <button id="sortZA" class="action-btn">📄 Z→A</button>
+                    <button id="resetFilter" class="action-btn">♻️ Сброс</button>
+                </div>
+            </div>
+            <div class="stats-panel">
+                <span id="counterDisplay">🧟 Мусора: 0</span>
+                <button id="randomFactBtn" class="action-btn">🎲 Случайный факт</button>
+                <button id="selfDestructBtn" class="action-btn danger">💀 Самовыпил (шутка)</button>
+            </div>
+        </div>
+
+        <div id="cardsContainer" class="cards-grid"></div>
+
+        <footer class="glass-footer">
+            <p>⚠️ 18+ САТИРА / ЧЁРНЫЙ ЮМОР. Не является руководством к действию. Вся информация подаётся в эпатажном ключе для взрослых, способных отличить шутку от реальности. Помните: жизнь ценна, а мы просто трэш-энциклопедия.</p>
+            <p>🗑️ trash-encyclopedia.github.io | .nojekyll обязателен</p>
+        </footer>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h3>💩 Треш-факт дня</h3>
+            <p id="modalText">Загрузка...</p>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>

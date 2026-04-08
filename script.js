@@ -1,7 +1,12 @@
-// script.js — огромный функционал: темы, языки, поиск, сортировка, счётчик отвратительности, случайные факты, модалка, самовыпил-шутка, локальное хранилище
+// ======================== ОПРЕДЕЛЕНИЕ ЯЗЫКА ИЗ ПУТИ ========================
+let currentLang = window.location.pathname.startsWith('/en/') ? 'en' : 'ru';
+// Сохраняем в localStorage, чтобы корневой редирект работал
+localStorage.setItem('trashLang', currentLang);
+
+// ======================== ДАННЫЕ ДЛЯ КАРТОЧЕК ========================
 const categoriesData = {
     ru: [
-        { id: 0, name: "💀 Суицидники", desc: "Профи по самовыпилу. Жизнь — боль, но на нашем сайте это повод для чёрной шутки. Рекомендуем: 1000 способов умереть от скуки.", icon: "🪦" },
+        { id: 0, name: "💀 Суицидники", desc: "Профи по самовыпилу. Жизнь — боль, но на нашем сайте это повод для чёрной шутки.", icon: "🪦" },
         { id: 1, name: "🧛‍♂️ Некрофилы", desc: "Любовь до гроба... буквально. Мёртвые — самые покладистые партнёры.", icon: "⚰️" },
         { id: 2, name: "🐶 Зоофилы", desc: "Фанаты хвостатых. Лучше бы кота завели, а не это.", icon: "🐕" },
         { id: 3, name: "👧 Педофилы", desc: "Отбросы ниже плинтуса. Наш сайт их не щадит — только насмешки и презрение.", icon: "🚫" },
@@ -32,7 +37,7 @@ const categoriesData = {
         { id: 28, name: "🍳 Говноеды", desc: "Экстремальные гурманы — не для слабонервных.", icon: "🍲" }
     ],
     en: [
-        { id: 0, name: "💀 Suiciders", desc: "Self-exit pros. Life sucks, but we mock with dark humor. Not a guide.", icon: "🪦" },
+        { id: 0, name: "💀 Suiciders", desc: "Self-exit pros. Life sucks, but we mock with dark humor.", icon: "🪦" },
         { id: 1, name: "🧛‍♂️ Necrophiles", desc: "Love beyond the grave. The dead are the quietest partners.", icon: "⚰️" },
         { id: 2, name: "🐶 Zoophiles", desc: "Furry fanatics. Should've just adopted a cat.", icon: "🐕" },
         { id: 3, name: "👧 Pedophiles", desc: "Trash below the plinth. Mockery and contempt only.", icon: "🚫" },
@@ -64,17 +69,12 @@ const categoriesData = {
     ]
 };
 
-let currentLang = "ru";
+// ======================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ========================
 let currentFilter = "";
-let sortMode = "default"; // "az", "za"
+let sortMode = "default";
 let disgustStorage = JSON.parse(localStorage.getItem("disgustCounts")) || {};
 
-function updateCounterUI() {
-    const total = document.querySelectorAll(".disgust-count").length;
-    const sum = Object.values(disgustStorage).reduce((a,b)=>a+b,0);
-    document.getElementById("counterDisplay").innerHTML = `🧟 Мусора: ${total} | 🤮 Отвратительность: ${sum}`;
-}
-
+// ======================== ФУНКЦИЯ ОТРИСОВКИ КАРТОЧЕК ========================
 function renderCards() {
     let data = categoriesData[currentLang];
     let filtered = data.filter(item => 
@@ -97,7 +97,7 @@ function renderCards() {
             </div>
             <div class="card-desc">${cat.desc}</div>
             <div class="card-footer">
-                <button class="disgust-btn" data-id="${cat.id}">🤢 Мерзость +1</button>
+                <button class="disgust-btn" data-id="${cat.id}">🤢 +1 disgust</button>
                 <span class="disgust-count" id="disgust-${cat.id}">🤮 ${count}</span>
             </div>
         `;
@@ -117,6 +117,20 @@ function renderCards() {
     updateCounterUI();
 }
 
+function updateCounterUI() {
+    const total = document.querySelectorAll(".disgust-count").length;
+    const sum = Object.values(disgustStorage).reduce((a,b)=>a+b,0);
+    const prefix = currentLang === 'ru' ? '🧟 Мусора: ' : '🧟 Trash count: ';
+    document.getElementById("counterDisplay").innerHTML = `${prefix}${total} | 🤮 ${sum}`;
+}
+
+// ======================== ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА (РЕДИРЕКТ) ========================
+function switchLanguage(lang) {
+    localStorage.setItem('trashLang', lang);
+    window.location.href = '/' + lang + '/';
+}
+
+// ======================== ТЕМЫ ========================
 function setTheme(theme) {
     document.body.classList.remove("theme-light", "theme-dark", "theme-contrast", "theme-accessibility");
     document.body.classList.add(`theme-${theme}`);
@@ -131,15 +145,7 @@ function initTheme() {
     });
 }
 
-function setLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem("trashLang", lang);
-    document.getElementById("lang-ru").classList.toggle("active", lang === "ru");
-    document.getElementById("lang-en").classList.toggle("active", lang === "en");
-    renderCards();
-}
-
-// случайный факт
+// ======================== СЛУЧАЙНЫЙ ФАКТ ========================
 const randomFacts = {
     ru: ["Самовыпил в 18 веке был элитным развлечением аристократов.", "Педофилы ненавидят нашу энциклопедию — хороший знак.", "Некрофилы всегда опаздывают на свидания...", "Самый мерзкий фетиш — платить налоги вовремя.", "В России АУЕ — миф, но шутки остаются."],
     en: ["Self-exit was an elite hobby in 18th century.", "Pedophiles hate our site — good sign.", "Necrophiles are always late to dates.", "The most disgusting fetish is paying taxes on time.", "AUE thugs are mostly myth, but jokes remain."]
@@ -151,73 +157,52 @@ function showRandomFact() {
     document.getElementById("modal").style.display = "flex";
 }
 
-// самовыпил шутка
 function selfDestructJoke() {
-    alert(currentLang === "ru" ? "💀 Не советуем, но если очень хочется — позвоните другу. А это просто шутка энциклопедии." : "💀 Don't actually do it. Call a friend. Just a dark joke.");
+    alert(currentLang === 'ru' ? "💀 Не советуем, но если очень хочется — позвоните другу. А это просто шутка энциклопедии." : "💀 Don't actually do it. Call a friend. Just a dark joke.");
 }
 
-// поиск и сортировка
-document.getElementById("searchInput").addEventListener("input", (e) => {
-    currentFilter = e.target.value;
+// ======================== ИНИЦИАЛИЗАЦИЯ И СОБЫТИЯ ========================
+document.addEventListener("DOMContentLoaded", () => {
     renderCards();
-});
-document.getElementById("sortAZ").addEventListener("click", () => {
-    sortMode = "az";
-    renderCards();
-});
-document.getElementById("sortZA").addEventListener("click", () => {
-    sortMode = "za";
-    renderCards();
-});
-document.getElementById("resetFilter").addEventListener("click", () => {
-    currentFilter = "";
-    sortMode = "default";
-    document.getElementById("searchInput").value = "";
-    renderCards();
-});
-document.getElementById("randomFactBtn").addEventListener("click", showRandomFact);
-document.getElementById("selfDestructBtn").addEventListener("click", selfDestructJoke);
-document.querySelector(".close-modal").addEventListener("click", () => {
-    document.getElementById("modal").style.display = "none";
-});
-window.addEventListener("click", (e) => {
-    if (e.target === document.getElementById("modal")) document.getElementById("modal").style.display = "none";
-});
+    initTheme();
 
-// языковые кнопки
-document.getElementById("lang-ru").addEventListener("click", () => setLanguage("ru"));
-document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
-
-// инициализация
-initTheme();
-const savedLang = localStorage.getItem("trashLang") || "ru";
-setLanguage(savedLang);
-renderCards();
-
-// дополнительная функция: динамический счетчик кликов по карточкам (для веселья)
-document.addEventListener("click", (e) => {
-    if(e.target.closest(".glass-card") && !e.target.closest(".disgust-btn")) {
-        console.log("трогаешь мусор?");
-    }
-});
-
-// анимация при скролле (ленивый прикол)
-window.addEventListener("scroll", () => {
-    const cards = document.querySelectorAll(".glass-card");
-    cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        if(rect.top < window.innerHeight - 100) {
-            card.style.opacity = "1";
-            card.style.transform = "translateY(0)";
-        } else {
-            card.style.opacity = "0.7";
-        }
+    // Кнопки поиска и сортировки
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+        currentFilter = e.target.value;
+        renderCards();
     });
-});
-// добавим параллакс эффект на фон (игровой)
-document.addEventListener("mousemove", (e) => {
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight;
-    const bg = document.querySelector(".glow-bg");
-    if(bg) bg.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+    document.getElementById("sortAZ").addEventListener("click", () => {
+        sortMode = "az";
+        renderCards();
+    });
+    document.getElementById("sortZA").addEventListener("click", () => {
+        sortMode = "za";
+        renderCards();
+    });
+    document.getElementById("resetFilter").addEventListener("click", () => {
+        currentFilter = "";
+        sortMode = "default";
+        document.getElementById("searchInput").value = "";
+        renderCards();
+    });
+    document.getElementById("randomFactBtn").addEventListener("click", showRandomFact);
+    document.getElementById("selfDestructBtn").addEventListener("click", selfDestructJoke);
+    document.querySelector(".close-modal").addEventListener("click", () => {
+        document.getElementById("modal").style.display = "none";
+    });
+    window.addEventListener("click", (e) => {
+        if (e.target === document.getElementById("modal")) document.getElementById("modal").style.display = "none";
+    });
+
+    // Переключение языка через кнопки
+    document.getElementById("lang-ru").addEventListener("click", () => switchLanguage('ru'));
+    document.getElementById("lang-en").addEventListener("click", () => switchLanguage('en'));
+
+    // Параллакс-эффект
+    document.addEventListener("mousemove", (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        const bg = document.querySelector(".glow-bg");
+        if(bg) bg.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+    });
 });
