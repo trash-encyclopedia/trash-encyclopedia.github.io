@@ -1,0 +1,68 @@
+/* Дополнительные стили для админки */
+#factsEditor .fact-item {
+    background: rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 20px;
+    border-left: 4px solid var(--accent);
+}
+
+.fact-text {
+    width: 100%;
+    padding: 10px;
+    border-radius: 16px;
+    background: #1e1e2e;
+    color: white;
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+    font-family: inherit;
+}
+
+.delete-fact {
+    background: #8b0000;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.confession-item {
+    background: rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.confession-text {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.confession-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.delete-confession {
+    background: #8b0000;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.log-entry {
+    border-bottom: 1px solid var(--border);
+    padding: 8px;
+    font-size: 0.85rem;
+    font-family: monospace;
+}
+
+#adminPanel button {
+    margin: 5px;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍎 Админ-панель Trash Encyclopedia</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="panel.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,900&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+    <div class="glow-bg"></div>
+    <div class="container">
+        <header class="glass-header">
+            <div class="logo">
+                <span class="trash-icon">🍎👑</span>
+                <h1>ADMIN PANEL</h1>
+                <div class="sub">yummy apples control</div>
+            </div>
+            <div class="toolbar">
+                <div class="lang-switcher">
+                    <a href="?hl=ru" class="lang-btn" id="admin-lang-ru">RU</a>
+                    <a href="?hl=en" class="lang-btn" id="admin-lang-en">EN</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Форма входа -->
+        <div id="loginForm" class="glass-card" style="max-width: 400px; margin: 100px auto; text-align: center;">
+            <h2>🔐 Вход в админку</h2>
+            <input type="password" id="adminPassword" placeholder="Пароль" style="width: 80%; padding: 12px; margin: 20px 0; border-radius: 40px; background: rgba(0,0,0,0.5); color: white; border: 1px solid var(--border);">
+            <button id="loginBtn" class="action-btn">Войти</button>
+            <p id="loginError" style="color: red; margin-top: 15px; display: none;">Неверный пароль!</p>
+        </div>
+
+        <!-- Панель управления (скрыта до входа) -->
+        <div id="adminPanel" style="display: none;">
+            <div class="dashboard" style="margin-bottom: 20px;">
+                <h2>📊 Управление контентом</h2>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button id="resetRatingBtn" class="action-btn danger">🏆 Сбросить рейтинг</button>
+                    <button id="resetDisgustBtn" class="action-btn danger">🤢 Сбросить счётчики мерзости</button>
+                    <button id="clearLogsBtn" class="action-btn danger">📋 Очистить лог</button>
+                    <button id="logoutBtn" class="action-btn">🚪 Выйти</button>
+                </div>
+            </div>
+
+            <!-- Редактор топ фактов -->
+            <div class="glass-card" style="margin-bottom: 30px;">
+                <h3>💩 Топ факты (topFacts)</h3>
+                <div id="factsEditor"></div>
+                <button id="addFactBtn" class="action-btn" style="margin-top: 15px;">+ Добавить факт</button>
+                <button id="saveFactsBtn" class="action-btn" style="background: #2e7d32;">💾 Сохранить факты</button>
+            </div>
+
+            <!-- Исповеди -->
+            <div class="glass-card" style="margin-bottom: 30px;">
+                <h3>🗣 Исповеди (confessions)</h3>
+                <div id="confessionsListAdmin"></div>
+            </div>
+
+            <!-- Лог действий -->
+            <div class="glass-card">
+                <h3>📜 Лог действий админа</h3>
+                <div id="adminLogs"></div>
+            </div>
+        </div>
+
+        <footer class="glass-footer">
+            <p>⚠️ Скрытая админ-панель. Не распространяй URL.</p>
+        </footer>
+    </div>
+
+    <script src="panel.js"></script>
+</body>
+</html>
