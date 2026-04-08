@@ -1,1 +1,0 @@
-# trash-encyclopedia.github.io
