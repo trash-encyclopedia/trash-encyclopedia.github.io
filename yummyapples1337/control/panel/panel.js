@@ -3,10 +3,13 @@ const ADMIN_PASSWORD = "TrashAdmin666";
 
 // ========== ОПРЕДЕЛЕНИЕ ЯЗЫКА ИНТЕРФЕЙСА АДМИНКИ ==========
 const urlParams = new URLSearchParams(window.location.search);
-let adminLang = urlParams.get('hl') === 'en' ? 'en' : 'ru';
+let adminLang = urlParams.get('hl');
+// допустимые языки: ru, en, zh, ar, de, fr, es, pt, it
+const supportedLangs = ['ru', 'en', 'zh', 'ar', 'de', 'fr', 'es', 'pt', 'it'];
+if (!supportedLangs.includes(adminLang)) adminLang = 'ru';
 localStorage.setItem('adminLang', adminLang);
 
-// Тексты интерфейса
+// ========== ПЕРЕВОДЫ ИНТЕРФЕЙСА ==========
 const i18n = {
     ru: {
         loginTitle: "🔐 Вход в админку",
@@ -51,11 +54,165 @@ const i18n = {
         confirmClearLogs: "Clear action log?",
         saved: "Saved!",
         resetDone: "Reset done!"
+    },
+    zh: {
+        loginTitle: "🔐 管理员登录",
+        passwordPlaceholder: "密码",
+        loginBtn: "登录",
+        wrongPassword: "密码错误！",
+        resetRating: "🏆 重置评分",
+        resetDisgust: "🤢 重置恶心计数器",
+        clearLogs: "📋 清空日志",
+        logout: "🚪 退出",
+        topFactsTitle: "💩 热门事实",
+        addFact: "+ 添加事实",
+        saveFacts: "💾 保存事实",
+        confessionsTitle: "🗣 忏悔录",
+        adminLogsTitle: "📜 管理员操作日志",
+        delete: "删除",
+        confirmDelete: "永久删除？",
+        confirmResetRating: "重置所有评分？",
+        confirmResetDisgust: "重置所有恶心计数器？",
+        confirmClearLogs: "清空操作日志？",
+        saved: "已保存！",
+        resetDone: "重置完成！"
+    },
+    ar: {
+        loginTitle: "🔐 دخول المشرف",
+        passwordPlaceholder: "كلمة المرور",
+        loginBtn: "دخول",
+        wrongPassword: "كلمة مرور خاطئة!",
+        resetRating: "🏆 إعادة تعيين التقييم",
+        resetDisgust: "🤢 إعادة تعيين عدادات الاشمئزاز",
+        clearLogs: "📋 مسح السجلات",
+        logout: "🚪 خروج",
+        topFactsTitle: "💩 الحقائق الأكثر",
+        addFact: "+ إضافة حقيقة",
+        saveFacts: "💾 حفظ الحقائق",
+        confessionsTitle: "🗣 الاعترافات",
+        adminLogsTitle: "📜 سجل إجراءات المشرف",
+        delete: "حذف",
+        confirmDelete: "حذف نهائي؟",
+        confirmResetRating: "إعادة تعيين كل التقييمات؟",
+        confirmResetDisgust: "إعادة تعيين عدادات الاشمئزاز؟",
+        confirmClearLogs: "مسح سجل الإجراءات؟",
+        saved: "تم الحفظ!",
+        resetDone: "تمت إعادة التعيين!"
+    },
+    de: {
+        loginTitle: "🔐 Admin-Login",
+        passwordPlaceholder: "Passwort",
+        loginBtn: "Anmelden",
+        wrongPassword: "Falsches Passwort!",
+        resetRating: "🏆 Bewertung zurücksetzen",
+        resetDisgust: "🤢 Ekel-Zähler zurücksetzen",
+        clearLogs: "📋 Logs löschen",
+        logout: "🚪 Abmelden",
+        topFactsTitle: "💩 Top-Fakten",
+        addFact: "+ Fakt hinzufügen",
+        saveFacts: "💾 Fakten speichern",
+        confessionsTitle: "🗣 Geständnisse",
+        adminLogsTitle: "📜 Admin-Protokoll",
+        delete: "Löschen",
+        confirmDelete: "Endgültig löschen?",
+        confirmResetRating: "Alle Bewertungen zurücksetzen?",
+        confirmResetDisgust: "Alle Ekel-Zähler zurücksetzen?",
+        confirmClearLogs: "Protokoll löschen?",
+        saved: "Gespeichert!",
+        resetDone: "Zurückgesetzt!"
+    },
+    fr: {
+        loginTitle: "🔐 Connexion admin",
+        passwordPlaceholder: "Mot de passe",
+        loginBtn: "Se connecter",
+        wrongPassword: "Mot de passe incorrect !",
+        resetRating: "🏆 Réinitialiser le classement",
+        resetDisgust: "🤢 Réinitialiser les compteurs de dégoût",
+        clearLogs: "📋 Effacer les journaux",
+        logout: "🚪 Déconnexion",
+        topFactsTitle: "💩 Faits les plus",
+        addFact: "+ Ajouter un fait",
+        saveFacts: "💾 Enregistrer les faits",
+        confessionsTitle: "🗣 Confessions",
+        adminLogsTitle: "📜 Journal d'actions admin",
+        delete: "Supprimer",
+        confirmDelete: "Supprimer définitivement ?",
+        confirmResetRating: "Réinitialiser tous les votes ?",
+        confirmResetDisgust: "Réinitialiser tous les compteurs de dégoût ?",
+        confirmClearLogs: "Effacer le journal ?",
+        saved: "Enregistré !",
+        resetDone: "Réinitialisé !"
+    },
+    es: {
+        loginTitle: "🔐 Acceso Admin",
+        passwordPlaceholder: "Contraseña",
+        loginBtn: "Ingresar",
+        wrongPassword: "¡Contraseña incorrecta!",
+        resetRating: "🏆 Restablecer puntuación",
+        resetDisgust: "🤢 Restablecer contadores de asco",
+        clearLogs: "📋 Borrar registros",
+        logout: "🚪 Salir",
+        topFactsTitle: "💩 Datos más destacados",
+        addFact: "+ Agregar dato",
+        saveFacts: "💾 Guardar datos",
+        confessionsTitle: "🗣 Confesiones",
+        adminLogsTitle: "📜 Registro de acciones admin",
+        delete: "Eliminar",
+        confirmDelete: "¿Eliminar permanentemente?",
+        confirmResetRating: "¿Restablecer todas las votaciones?",
+        confirmResetDisgust: "¿Restablecer todos los contadores de asco?",
+        confirmClearLogs: "¿Borrar registro de acciones?",
+        saved: "¡Guardado!",
+        resetDone: "¡Restablecido!"
+    },
+    pt: {
+        loginTitle: "🔐 Login Admin",
+        passwordPlaceholder: "Senha",
+        loginBtn: "Entrar",
+        wrongPassword: "Senha incorreta!",
+        resetRating: "🏆 Redefinir classificação",
+        resetDisgust: "🤢 Redefinir contadores de nojo",
+        clearLogs: "📋 Limpar registros",
+        logout: "🚪 Sair",
+        topFactsTitle: "💩 Principais fatos",
+        addFact: "+ Adicionar fato",
+        saveFacts: "💾 Salvar fatos",
+        confessionsTitle: "🗣 Confissões",
+        adminLogsTitle: "📜 Registro de ações admin",
+        delete: "Excluir",
+        confirmDelete: "Excluir permanentemente?",
+        confirmResetRating: "Redefinir todas as votações?",
+        confirmResetDisgust: "Redefinir todos os contadores de nojo?",
+        confirmClearLogs: "Limpar registro de ações?",
+        saved: "Salvo!",
+        resetDone: "Redefinido!"
+    },
+    it: {
+        loginTitle: "🔐 Accesso Admin",
+        passwordPlaceholder: "Password",
+        loginBtn: "Accedi",
+        wrongPassword: "Password errata!",
+        resetRating: "🏆 Azzera punteggio",
+        resetDisgust: "🤢 Azzera contatori disgusto",
+        clearLogs: "📋 Cancella log",
+        logout: "🚪 Esci",
+        topFactsTitle: "💩 Fatti principali",
+        addFact: "+ Aggiungi fatto",
+        saveFacts: "💾 Salva fatti",
+        confessionsTitle: "🗣 Confessioni",
+        adminLogsTitle: "📜 Registro azioni admin",
+        delete: "Elimina",
+        confirmDelete: "Eliminare definitivamente?",
+        confirmResetRating: "Azzera tutte le votazioni?",
+        confirmResetDisgust: "Azzera tutti i contatori disgusto?",
+        confirmClearLogs: "Cancellare il registro azioni?",
+        saved: "Salvato!",
+        resetDone: "Azzera effettuato!"
     }
 };
 
 function t(key) {
-    return i18n[adminLang][key] || key;
+    return i18n[adminLang]?.[key] || i18n.ru[key] || key;
 }
 
 function updateUITexts() {
@@ -72,16 +229,23 @@ function updateUITexts() {
     document.querySelector("#saveFactsBtn").innerText = t('saveFacts');
     document.querySelector("#confessionsListAdmin h3").innerText = t('confessionsTitle');
     document.querySelector("#adminLogs h3").innerText = t('adminLogsTitle');
+    // обновляем кнопки удаления, если они уже есть (перерендер потом)
+    document.querySelectorAll(".delete-fact, .delete-confession").forEach(btn => {
+        if (btn.innerText !== t('delete')) btn.innerText = t('delete');
+    });
 }
 
+// Остальная часть файла (loadData, saveData, addLog, renderFactsEditor и т.д.) остаётся без изменений,
+// только внутри renderFactsEditor и renderConfessionsList нужно использовать t('delete') для кнопок.
+// Ниже приведены эти функции с использованием t('delete').
+
 // ========== РАБОТА С ДАННЫМИ ==========
-// Загружаем данные из localStorage (основного сайта, т.к. они хранятся в корне)
 function loadData() {
     return {
         topFacts: JSON.parse(localStorage.getItem("trashTopFacts")) || 
             (adminLang === 'ru' ? 
                 ["Некрофилы были замечены на кладбище с вибратором в форме кости.", "Педофилы в тюрьме становятся 'девочками' для других заключённых.", "Зоофилы пробовали скрестить овцу с табуреткой.", "АУЕшники красят ногти в черный и называют это 'понятия'.", "Говноеды утверждают, что какашки веганов слаще."] :
-                ["Necrophiles were caught at cemetery with bone-shaped vibrator.", "Pedophiles in prison become 'girls' for other inmates.", "Zoophiles tried to cross a sheep with a stool.", "AUE thugs paint nails black and call it 'code'.", "Shit-eaters claim vegan poop is sweeter."]
+                ["Necrophiles were caught at cemetery with bone-shaped vibrator.", "Pedophiles in prison become 'girls' for other inmates.", "Zoophiles tried to cross a sheep with a stool.", "AUE thugs paint nails black and call it 'code'.', 'Shit-eaters claim vegan poop is sweeter."]
             ),
         confessions: JSON.parse(localStorage.getItem("trashConfessions")) || [],
         rating: JSON.parse(localStorage.getItem("trashRating")) || {},
@@ -191,7 +355,6 @@ function initAdmin() {
     renderLogs();
 
     document.getElementById("saveFactsBtn").onclick = () => {
-        // собираем тексты из textarea
         const textareas = document.querySelectorAll(".fact-text");
         const newFacts = [];
         textareas.forEach(ta => newFacts.push(ta.value));
@@ -199,7 +362,7 @@ function initAdmin() {
         saveData(data);
         addLog("Сохранены топ-факты");
         alert(t('saved'));
-        renderFactsEditor(data); // обновить, чтобы новые индексы
+        renderFactsEditor(data);
     };
 
     document.getElementById("addFactBtn").onclick = () => {
@@ -269,17 +432,8 @@ document.getElementById("loginBtn").onclick = () => {
     }
 };
 
-// Обновление языков
-document.getElementById("admin-lang-ru").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "?hl=ru";
-});
-document.getElementById("admin-lang-en").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "?hl=en";
-});
+// Переключение языка через кнопки уже обрабатывается прямыми ссылками в HTML, поэтому дополнительных обработчиков не нужно.
 
-// Инициализация при загрузке
 window.onload = () => {
     updateUITexts();
     checkLogin();
