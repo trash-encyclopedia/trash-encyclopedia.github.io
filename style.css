@@ -1,0 +1,319 @@
+/* style.css — жирный CSS с блюром, стеклом, адаптивом */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+:root {
+    --bg: #0a0f1e;
+    --surface: rgba(20, 25, 40, 0.75);
+    --text: #eef5ff;
+    --text-muted: #9aaec0;
+    --accent: #ff3366;
+    --accent-glow: #ff336680;
+    --border: #2a3450;
+    --card-bg: rgba(15, 20, 35, 0.8);
+    --blur: blur(12px);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+
+.glow-bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(255,51,102,0.15), transparent 70%);
+    pointer-events: none;
+    z-index: -2;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Стеклянные элементы */
+.glass-header, .glass-footer, .modal-content, .glass-card {
+    backdrop-filter: var(--blur);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.trash-icon {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 0 6px var(--accent));
+}
+
+.sub {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+}
+
+.toolbar {
+    display: flex;
+    gap: 20px;
+}
+
+.theme-switcher button, .lang-btn {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+.theme-switcher button:hover, .lang-btn:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+.lang-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.dashboard {
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border-radius: 48px;
+    padding: 20px 28px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-sort {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 2;
+}
+#searchInput {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid var(--border);
+    border-radius: 60px;
+    padding: 12px 20px;
+    color: var(--text);
+    font-size: 1rem;
+    min-width: 220px;
+    flex: 2;
+    outline: none;
+}
+#searchInput:focus {
+    border-color: var(--accent);
+}
+
+.action-btn {
+    background: #1e2a3a;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.action-btn:hover {
+    background: var(--accent);
+    transform: scale(0.96);
+}
+.danger {
+    background: #8b0000;
+}
+.danger:hover {
+    background: #ff0000;
+    box-shadow: 0 0 10px red;
+}
+
+.stats-panel {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+    margin: 30px 0;
+}
+
+.glass-card {
+    background: var(--card-bg);
+    border-radius: 36px;
+    padding: 20px;
+    transition: 0.25s ease;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.glass-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px dashed var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+}
+.card-icon {
+    font-size: 2.5rem;
+}
+.card-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+.card-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.disgust-btn {
+    background: none;
+    border: 1px solid #ff6680;
+    border-radius: 30px;
+    padding: 6px 12px;
+    font-weight: bold;
+    color: #ff99aa;
+    cursor: pointer;
+}
+.disgust-count {
+    font-size: 0.8rem;
+    background: #00000055;
+    padding: 4px 10px;
+    border-radius: 30px;
+}
+
+/* Модалка */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    max-width: 500px;
+    width: 90%;
+    padding: 30px;
+    position: relative;
+    text-align: center;
+}
+.close-modal {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 32px;
+    cursor: pointer;
+}
+footer {
+    margin-top: 50px;
+    padding: 25px;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+/* ========= ТЕМЫ ========= */
+body.theme-light {
+    --bg: #f2eee9;
+    --surface: rgba(245, 240, 235, 0.8);
+    --text: #1e1b1a;
+    --text-muted: #4a3f3c;
+    --border: #cdc2b8;
+    --card-bg: rgba(255, 250, 240, 0.85);
+}
+body.theme-contrast {
+    --bg: #000000;
+    --surface: #1f1f1f;
+    --text: #ffff00;
+    --text-muted: #cccc00;
+    --border: #ff00cc;
+    --accent: #ff00aa;
+    --card-bg: #111111;
+}
+body.theme-accessibility {
+    font-size: 1.25rem;
+    --bg: #000000;
+    --surface: #1a1a1a;
+    --text: #ffffff;
+    --text-muted: #dddddd;
+    --border: #ffcc00;
+    --accent: #ffaa00;
+    --card-bg: #2a2a2a;
+}
+body.theme-accessibility .glass-card {
+    border-width: 3px;
+}
+body.theme-accessibility button, 
+body.theme-accessibility .action-btn {
+    font-size: 1.1rem;
+    padding: 12px 24px;
+}
+
+/* адаптивность */
+@media (max-width: 700px) {
+    body { padding: 12px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .dashboard { flex-direction: column; align-items: stretch; }
+    .logo h1 { font-size: 1.4rem; }
+}
